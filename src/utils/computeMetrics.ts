@@ -91,6 +91,7 @@ async function getCentralization(
     return (
         ((topHolderSum / totalSupply) * 100).toLocaleString('en-US', {
             maximumFractionDigits: 2,
+            minimumFractionDigits: 2,
         }) + '%'
     );
 }

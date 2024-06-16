@@ -70,7 +70,7 @@ export async function GET(req: NextRequest): Promise<Response> {
             logo,
             fields: [
                 {
-                    display: displayOptions.holderCount,
+                    display: displayOptions.holderCount === 'true',
                     name: 'holder count',
                     value: holderCount,
                 },
@@ -85,12 +85,12 @@ export async function GET(req: NextRequest): Promise<Response> {
                 //     value: monthlyVolume,
                 // },
                 {
-                    display: displayOptions.totalSupply,
+                    display: displayOptions.totalSupply === 'true',
                     name: 'total supply',
                     value: totalSupply,
                 },
                 {
-                    display: displayOptions.centralization,
+                    display: displayOptions.centralization === 'true',
                     name: 'centralization',
                     value: centralization,
                 },

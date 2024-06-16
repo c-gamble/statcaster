@@ -135,6 +135,7 @@ export const createPreview = async (state: any) => {
                     JSON.stringify(displayOptions)
                 )}`
             );
+
             error = false;
         } catch (e: any) {
             error = true;
