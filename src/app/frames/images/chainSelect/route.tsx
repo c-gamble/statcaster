@@ -32,10 +32,15 @@ export async function GET(request: Request) {
             },
         ];
 
-        const gradientStart: string =
-            process.env.NEXT_PUBLIC_DEFAULT_GRADIENT_START || '';
-        const gradientEnd: string =
-            process.env.NEXT_PUBLIC_DEFAULT_GRADIENT_END || '';
+        const url = new URL(request.url);
+        const gradientStart =
+            url.searchParams.get('gradientStart') ||
+            process.env.NEXT_PUBLIC_DEFAULT_GRADIENT_START ||
+            '';
+        const gradientEnd =
+            url.searchParams.get('gradientEnd') ||
+            process.env.NEXT_PUBLIC_DEFAULT_GRADIENT_END ||
+            '';
         const textColor = getTextColor(gradientStart, gradientEnd);
 
         return new ImageResponse(
@@ -58,19 +63,17 @@ export async function GET(request: Request) {
                             textAlign: 'center',
                             fontSize: '80px',
                             margin: '0px',
-                            color: 'white',
                         }}
                     >
-                        welcome to statcaster
+                        select a chain
                     </h1>
                     <p
                         style={{
                             textAlign: 'center',
-                            color: 'white',
                             fontSize: '30px',
                         }}
                     >
-                        token tracking in frames
+                        polychain support coming soon...
                     </p>
                     <div
                         style={{

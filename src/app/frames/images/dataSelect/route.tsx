@@ -1,9 +1,10 @@
-import { getTextColor } from '@/utils/textColor';
 import { ImageResponse } from 'next/og';
+import getMetricInfo from '@/constants/getMetricInfo';
+import { getTextColor } from '@/utils/textColor';
 
 export const runtime = 'edge';
 
-export async function GET(request: Request) {
+const handleRequest = async (request: Request) => {
     try {
         const regularFontData = fetch(
             new URL(
@@ -32,11 +33,20 @@ export async function GET(request: Request) {
             },
         ];
 
+        const { searchParams } = new URL(request.url);
+        const metric: string = searchParams.get('metric') || '';
         const gradientStart: string =
-            process.env.NEXT_PUBLIC_DEFAULT_GRADIENT_START || '';
+            searchParams.get('gradientStart') ||
+            process.env.NEXT_PUBLIC_DEFAULT_GRADIENT_START ||
+            '';
         const gradientEnd: string =
-            process.env.NEXT_PUBLIC_DEFAULT_GRADIENT_END || '';
+            searchParams.get('gradientEnd') ||
+            process.env.NEXT_PUBLIC_DEFAULT_GRADIENT_END ||
+            '';
+
         const textColor = getTextColor(gradientStart, gradientEnd);
+
+        const { title, subtitle } = getMetricInfo(metric);
 
         return new ImageResponse(
             (
@@ -58,19 +68,17 @@ export async function GET(request: Request) {
                             textAlign: 'center',
                             fontSize: '80px',
                             margin: '0px',
-                            color: 'white',
                         }}
                     >
-                        welcome to statcaster
+                        {title}
                     </h1>
                     <p
                         style={{
                             textAlign: 'center',
-                            color: 'white',
                             fontSize: '30px',
                         }}
                     >
-                        token tracking in frames
+                        {subtitle}
                     </p>
                     <div
                         style={{
@@ -82,7 +90,11 @@ export async function GET(request: Request) {
                         }}
                     >
                         <img
-                            src={`https://soft-pump-assets.s3.amazonaws.com/${process.env.NEXT_PUBLIC_LOGO_LIGHT}`}
+                            src={`https://soft-pump-assets.s3.amazonaws.com/${
+                                textColor == 'black'
+                                    ? process.env.NEXT_PUBLIC_LOGO_DARK
+                                    : process.env.NEXT_PUBLIC_LOGO_LIGHT
+                            }`}
                             style={{ height: '50px' }}
                             alt="SOFT logo"
                         />
@@ -99,4 +111,12 @@ export async function GET(request: Request) {
         console.log(e);
         return new Response(e.message, { status: 500 });
     }
+};
+
+export function GET(request: Request) {
+    return handleRequest(request);
+}
+
+export function POST(request: Request) {
+    return handleRequest(request);
 }

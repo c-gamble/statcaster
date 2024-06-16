@@ -4,88 +4,7 @@ import axios from 'axios';
 
 export const runtime = 'edge';
 
-async function returnError() {
-    const regularFontData = fetch(
-        new URL(
-            'https://soft-pump-assets.s3.amazonaws.com/Montserrat/static/Montserrat-Regular.ttf'
-        )
-    ).then((res) => res.arrayBuffer());
-    const boldFontData = fetch(
-        new URL(
-            'https://soft-pump-assets.s3.amazonaws.com/Montserrat/static/Montserrat-Bold.ttf'
-        )
-    ).then((res) => res.arrayBuffer());
-
-    const regularFont = await Promise.all([regularFontData]);
-    const boldFont = await Promise.all([boldFontData]);
-
-    const fonts: any = [
-        {
-            name: 'Montserrat',
-            data: regularFont[0],
-            weight: 400,
-        },
-        {
-            name: 'Montserrat',
-            data: boldFont[0],
-            weight: 700,
-        },
-    ];
-
-    return new ImageResponse(
-        (
-            <div
-                style={{
-                    display: 'flex',
-                    height: '100vh',
-                    width: '100vw',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexDirection: 'column',
-                    backgroundImage:
-                        'linear-gradient(to right, #014bad, #17101F)',
-                }}
-            >
-                <h1
-                    style={{
-                        color: 'white',
-                        fontSize: '60px',
-                        margin: '0px',
-                        fontWeight: 700,
-                    }}
-                >
-                    token info not found
-                </h1>
-                <div
-                    style={{
-                        position: 'absolute',
-                        display: 'flex',
-                        bottom: '0',
-                        right: '0',
-                        padding: '20px',
-                    }}
-                >
-                    <p
-                        style={{
-                            color: 'white',
-                            fontSize: '20px',
-                            margin: '0px',
-                        }}
-                    >
-                        created with statcaster by SOFT
-                    </p>
-                </div>
-            </div>
-        ),
-        {
-            fonts: fonts,
-            width: 1200,
-            height: 630,
-        }
-    );
-}
-
-export const createPreview = async (state: any) => {
+export async function GET(request: Request) {
     try {
         const regularFontData = fetch(
             new URL(
@@ -114,26 +33,15 @@ export const createPreview = async (state: any) => {
             },
         ];
 
-        const textColor = getTextColor(state.gradientStart, state.gradientEnd);
-        const displayOptions = {
-            holderCount: state.holderCount,
-            // dailyVolume: state.dailyVolume,
-            // monthlyVolume: state.monthlyVolume,
-            totalSupply: state.totalSupply,
-            centralization: state.centralization,
-        };
+        const url = new URL(request.url);
+        const chain = url.searchParams.get('chain') || '';
+        const tokenAddress = url.searchParams.get('tokenAddress') || '';
 
         let tokenInfoResponse;
         let error;
         try {
             tokenInfoResponse = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/api/tokenInfo?chain=${
-                    state.chain
-                }&tokenAddress=${
-                    state.tokenAddress
-                }&displayOptions=${encodeURIComponent(
-                    JSON.stringify(displayOptions)
-                )}`
+                `${process.env.NEXT_PUBLIC_API_URL}/api/display?chain=${chain}&tokenAddress=${tokenAddress}`
             );
             error = false;
         } catch (e: any) {
@@ -141,11 +49,56 @@ export const createPreview = async (state: any) => {
         }
 
         if (!tokenInfoResponse || !tokenInfoResponse.data || error) {
-            const errorResponse = await returnError();
-            return errorResponse;
+            return new ImageResponse(
+                (
+                    <div
+                        style={{
+                            display: 'flex',
+                            height: '100vh',
+                            width: '100vw',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexDirection: 'column',
+                            backgroundImage:
+                                'linear-gradient(to right, #014bad, #17101F)',
+                        }}
+                    >
+                        <h1
+                            style={{
+                                color: 'white',
+                                fontSize: '60px',
+                                margin: '0px',
+                                fontWeight: 700,
+                            }}
+                        >
+                            token not found
+                        </h1>
+                        <div
+                            style={{
+                                position: 'absolute',
+                                display: 'flex',
+                                bottom: '0',
+                                right: '0',
+                                padding: '20px',
+                            }}
+                        >
+                            <p
+                                style={{
+                                    color: 'white',
+                                    fontSize: '20px',
+                                    margin: '0px',
+                                }}
+                            >
+                                created with statcaster by SOFT
+                            </p>
+                        </div>
+                    </div>
+                )
+            );
         }
 
         const token = tokenInfoResponse.data;
+        const textColor = getTextColor(token.gradientStart, token.gradientEnd);
 
         return new ImageResponse(
             (
@@ -157,7 +110,7 @@ export const createPreview = async (state: any) => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         flexDirection: 'column',
-                        backgroundImage: `linear-gradient(90deg, #${state.gradientStart} 0%, #${state.gradientEnd} 100%)`,
+                        backgroundImage: `linear-gradient(to right, #${token.gradientStart}, #${token.gradientEnd})`,
                         color: textColor,
                     }}
                 >
@@ -296,6 +249,7 @@ export const createPreview = async (state: any) => {
             }
         );
     } catch (e: any) {
+        console.log(e);
         return new Response(e.message, { status: 500 });
     }
-};
+}
