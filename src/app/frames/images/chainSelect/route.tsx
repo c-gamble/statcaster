@@ -73,7 +73,7 @@ export async function GET(request: Request) {
                             fontSize: '30px',
                         }}
                     >
-                        polychain support coming soon...
+                        multi-chain support coming soon...
                     </p>
                     <div
                         style={{

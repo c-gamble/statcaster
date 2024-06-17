@@ -80,6 +80,17 @@ const handleRequest = async (request: Request) => {
                     >
                         {subtitle}
                     </p>
+                    {metric === 'centralization' && (
+                        <p
+                            style={{
+                                textAlign: 'center',
+                                fontSize: '30px',
+                                marginTop: '-8px',
+                            }}
+                        >
+                            note: higher values indicate more centralization
+                        </p>
+                    )}
                     <div
                         style={{
                             position: 'absolute',

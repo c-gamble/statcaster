@@ -185,6 +185,17 @@ export async function GET(request: Request) {
                                         >
                                             {field.value}
                                         </h1>
+                                        {field.name === 'centralization' && (
+                                            <p
+                                                style={{
+                                                    textAlign: 'center',
+                                                    fontSize: '26px',
+                                                }}
+                                            >
+                                                note: higher values indicate
+                                                more centralization
+                                            </p>
+                                        )}
                                     </div>
                                 ) : null
                             )}
