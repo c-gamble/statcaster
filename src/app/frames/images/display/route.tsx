@@ -36,19 +36,20 @@ export async function GET(request: Request) {
         const chain = url.searchParams.get('chain') || '';
         const tokenAddress = url.searchParams.get('tokenAddress') || '';
 
-        let tokenInfoResponse;
+        let token;
         let error;
         try {
-            tokenInfoResponse = await fetch(
+            const tokenInfoResponse = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/api/display?chain=${chain}&tokenAddress=${tokenAddress}`,
                 { cache: 'no-store' }
             );
+            token = await tokenInfoResponse.json();
             error = false;
         } catch (e: any) {
             error = true;
         }
 
-        if (!tokenInfoResponse || !tokenInfoResponse.data || error) {
+        if (!token || error) {
             return new ImageResponse(
                 (
                     <div
@@ -97,7 +98,6 @@ export async function GET(request: Request) {
             );
         }
 
-        const token = tokenInfoResponse.data;
         const textColor = getTextColor(token.gradientStart, token.gradientEnd);
 
         return new ImageResponse(

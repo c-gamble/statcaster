@@ -122,10 +122,10 @@ export const createPreview = async (state: any) => {
             centralization: state.centralization,
         };
 
-        let tokenInfoResponse;
+        let token;
         let error;
         try {
-            tokenInfoResponse = await fetch(
+            const tokenInfoResponse = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/api/tokenInfo?chain=${
                     state.chain
                 }&tokenAddress=${
@@ -135,18 +135,16 @@ export const createPreview = async (state: any) => {
                 )}`,
                 { cache: 'no-store' }
             );
-
+            token = await tokenInfoResponse.json();
             error = false;
         } catch (e: any) {
             error = true;
         }
 
-        if (!tokenInfoResponse || !tokenInfoResponse.data || error) {
+        if (!token || error) {
             const errorResponse = await returnError();
             return errorResponse;
         }
-
-        const token = tokenInfoResponse.data;
 
         return new ImageResponse(
             (
