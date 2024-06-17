@@ -1,6 +1,5 @@
 import { ImageResponse } from 'next/og';
 import { getTextColor } from '@/utils/textColor';
-import axios from 'axios';
 
 export const runtime = 'edge';
 
@@ -40,8 +39,9 @@ export async function GET(request: Request) {
         let tokenInfoResponse;
         let error;
         try {
-            tokenInfoResponse = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/api/display?chain=${chain}&tokenAddress=${tokenAddress}`
+            tokenInfoResponse = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/display?chain=${chain}&tokenAddress=${tokenAddress}`,
+                { cache: 'no-store' }
             );
             error = false;
         } catch (e: any) {
