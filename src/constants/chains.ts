@@ -6,6 +6,7 @@ export const CHAINS: any = {
         // gradientEnd: 'ffffff',
         chainId: 8453,
         tokenViewURL: 'https://basescan.org/token/',
+        totalSupplyAPI: `https://api.basescan.org/api?module=token&action=tokeninfo&apikey=${process.env.BASE_SCAN_API_KEY}&contractaddress=`,
         get tokenInfoAPI() {
             return `https://api.chainbase.online/v1/token/metadata?chain_id=${this.chainId}&contract_address=`;
         },

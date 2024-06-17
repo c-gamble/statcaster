@@ -5,6 +5,18 @@ import BigNumber from 'bignumber.js';
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 async function getTokenInfo(chain: any, tokenAddress: string) {
+    // get totalSupply from scanner
+    let totalSupply;
+    try {
+        const totalSupplyResponse = await axios.get(
+            chain.totalSupplyAPI + tokenAddress
+        );
+        totalSupply = totalSupplyResponse.data.result[0].totalSupply;
+    } catch (error) {
+        console.log('Error fetching total supply');
+        return null;
+    }
+
     return axios
         .get(chain.tokenInfoAPI + tokenAddress, {
             headers: {
@@ -21,7 +33,7 @@ async function getTokenInfo(chain: any, tokenAddress: string) {
                         : process.env.NEXT_PUBLIC_DEFAULT_LOGO_URL,
                 decimals: response.data.data.decimals,
                 totalSupply: (
-                    (new BigNumber(response.data.data.total_supply) as any) /
+                    (new BigNumber(totalSupply) as any) /
                     10 ** response.data.data.decimals
                 ).toLocaleString('en-US', { maximumFractionDigits: 0 }),
             };
