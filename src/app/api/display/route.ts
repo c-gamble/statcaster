@@ -100,7 +100,7 @@ export async function GET(req: NextRequest): Promise<Response> {
             gradientEnd,
             fields: [
                 {
-                    display: displayOptions.holderCount === 'true',
+                    display: displayOptions.holderCount,
                     name: 'holder count',
                     value: holderCount,
                 },
@@ -115,12 +115,12 @@ export async function GET(req: NextRequest): Promise<Response> {
                 //     value: monthlyVolume,
                 // },
                 {
-                    display: displayOptions.totalSupply === 'true',
+                    display: displayOptions.totalSupply,
                     name: 'total supply',
                     value: totalSupply,
                 },
                 {
-                    display: displayOptions.centralization === 'true',
+                    display: displayOptions.centralization,
                     name: 'centralization',
                     value: centralization,
                 },
