@@ -2,6 +2,8 @@ import { getFrameMetadata } from '@coinbase/onchainkit/frame';
 import type { Metadata } from 'next';
 import { CHAINS } from '@/constants/chains';
 
+export const dynamic = 'force-dynamic';
+
 const generateFrameMetadata = (chain: string, tokenAddress: string) => {
     const frameMetdata = getFrameMetadata({
         buttons: [

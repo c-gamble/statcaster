@@ -2,6 +2,8 @@ import { NextRequest } from 'next/server';
 import { computeMetrics } from '@/utils/computeMetrics';
 import { CHAINS } from '@/constants/chains';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest): Promise<Response> {
     const chain = req.nextUrl.searchParams.get('chain') || '';
     const tokenAddress = req.nextUrl.searchParams.get('tokenAddress') || '';
@@ -98,5 +100,3 @@ export async function GET(req: NextRequest): Promise<Response> {
         })
     );
 }
-
-export const dynamic = 'force-dynamic';

@@ -1,6 +1,8 @@
 import { getFrameHtmlResponse } from '@coinbase/onchainkit/frame';
 import { NextRequest, NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 async function getResponse(req: NextRequest): Promise<NextResponse> {
     const state = JSON.parse(
         decodeURIComponent(req.nextUrl.searchParams.get('state') || '')
@@ -29,5 +31,3 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 export async function POST(req: NextRequest): Promise<Response> {
     return getResponse(req);
 }
-
-export const dynamic = 'force-dynamic';

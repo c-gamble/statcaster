@@ -2,6 +2,8 @@ import { FrameRequest, getFrameHtmlResponse } from '@coinbase/onchainkit/frame';
 import { NextRequest, NextResponse } from 'next/server';
 import { updateState } from '@/utils/updateState';
 
+export const dynamic = 'force-dynamic';
+
 async function getResponse(req: NextRequest): Promise<NextResponse> {
     const from = req.nextUrl.searchParams.get('from') || '';
     const chain = req.nextUrl.searchParams.get('chain') || ''; // we have to use this because chainSelect is a button input
@@ -57,5 +59,3 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 export async function POST(req: NextRequest): Promise<Response> {
     return getResponse(req);
 }
-
-export const dynamic = 'force-dynamic';

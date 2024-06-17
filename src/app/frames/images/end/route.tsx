@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { getTextColor } from '@/utils/textColor';
 
 export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
     try {

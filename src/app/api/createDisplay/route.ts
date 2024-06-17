@@ -2,6 +2,8 @@ import { getFrameHtmlResponse } from '@coinbase/onchainkit/frame';
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
+export const dynamic = 'force-dynamic';
+
 function successResponse(state: any) {
     return new NextResponse(
         getFrameHtmlResponse({
@@ -82,5 +84,3 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 export async function POST(req: NextRequest): Promise<Response> {
     return getResponse(req);
 }
-
-export const dynamic = 'force-dynamic';

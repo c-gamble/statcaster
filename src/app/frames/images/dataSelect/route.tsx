@@ -3,6 +3,7 @@ import getMetricInfo from '@/constants/getMetricInfo';
 import { getTextColor } from '@/utils/textColor';
 
 export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
 const handleRequest = async (request: Request) => {
     try {
