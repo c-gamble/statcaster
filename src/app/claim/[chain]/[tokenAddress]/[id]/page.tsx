@@ -67,7 +67,7 @@ export default function Page({ params }: Props) {
                             display: 'flex',
                             bottom: '0',
                             left: '0',
-                            padding: '10px',
+                            padding: '30px',
                         }}
                     >
                         <a
@@ -93,7 +93,7 @@ export default function Page({ params }: Props) {
                             display: 'flex',
                             bottom: '0',
                             right: '0',
-                            padding: '10px',
+                            padding: '40px',
                         }}
                     >
                         <a
@@ -160,7 +160,7 @@ export default function Page({ params }: Props) {
                             display: 'flex',
                             bottom: '0',
                             left: '0',
-                            padding: '10px',
+                            padding: '30px',
                         }}
                     >
                         <a
@@ -186,7 +186,7 @@ export default function Page({ params }: Props) {
                             display: 'flex',
                             bottom: '0',
                             right: '0',
-                            padding: '10px',
+                            padding: '40px',
                         }}
                     >
                         <a
@@ -271,7 +271,7 @@ export default function Page({ params }: Props) {
                             display: 'flex',
                             bottom: '0',
                             left: '0',
-                            padding: '10px',
+                            padding: '30px',
                         }}
                     >
                         <a
@@ -297,7 +297,7 @@ export default function Page({ params }: Props) {
                             display: 'flex',
                             bottom: '0',
                             right: '0',
-                            padding: '10px',
+                            padding: '40px',
                         }}
                     >
                         <a

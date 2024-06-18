@@ -6,16 +6,16 @@ export default function Home() {
     return (
         <div className="h-screen w-screen bg-gradient-to-r to-[#17101F] from-[#014bad] flex flex-col justify-center items-start pl-[80px]">
             <h1 className="text-white font-normal text-6xl mb-[18px]">
-                statcaster by SOFT
+                Statcaster by Soft
             </h1>
-            <p className="text-white text-3xl">token tracking in frames</p>
+            <p className="text-white text-3xl">Token tracking in frames</p>
             <div
                 style={{
                     position: 'absolute',
                     display: 'flex',
                     bottom: '0',
                     left: '0',
-                    padding: '10px',
+                    padding: '30px',
                 }}
             >
                 <a
@@ -41,7 +41,7 @@ export default function Home() {
                     display: 'flex',
                     bottom: '0',
                     right: '0',
-                    padding: '10px',
+                    padding: '40px',
                 }}
             >
                 <a

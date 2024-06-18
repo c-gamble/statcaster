@@ -29,11 +29,11 @@ const frameMetdata = getFrameMetadata({
 
 export const generateMetadata = (): Metadata => {
     return {
-        title: `home page`,
-        description: 'first page of statcaster',
+        title: `Statcaster by Soft`,
+        description: 'Statcaster by Soft',
         openGraph: {
-            title: 'home page',
-            description: 'first page of statcaster',
+            title: 'Statcaster by Soft',
+            description: 'Statcaster by Soft',
             images: [`${process.env.NEXT_PUBLIC_SITE_URL}/frames/images/home`],
         },
         other: {
