@@ -4,7 +4,11 @@ import { CHAINS } from '@/constants/chains';
 
 export const dynamic = 'force-dynamic';
 
-const generateFrameMetadata = (chain: string, tokenAddress: string) => {
+const generateFrameMetadata = (
+    chain: string,
+    tokenAddress: string,
+    id: string
+) => {
     const frameMetdata = getFrameMetadata({
         buttons: [
             {
@@ -19,14 +23,14 @@ const generateFrameMetadata = (chain: string, tokenAddress: string) => {
             },
         ],
         image: {
-            src: `${process.env.NEXT_PUBLIC_SITE_URL}/frames/images/display?chain=${chain}&tokenAddress=${tokenAddress}`,
+            src: `${process.env.NEXT_PUBLIC_SITE_URL}/frames/images/display?chain=${chain}&tokenAddress=${tokenAddress}&id=${id}`,
         },
     });
     return frameMetdata;
 };
 
 type Props = {
-    params: { chain: string; tokenAddress: string };
+    params: { chain: string; tokenAddress: string; id: string };
 };
 
 export const generateMetadata = ({ params }: Props): Metadata => {
@@ -37,11 +41,15 @@ export const generateMetadata = ({ params }: Props): Metadata => {
             title: `stats page`,
             description: 'view your token stats here',
             images: [
-                `${process.env.NEXT_PUBLIC_SITE_URL}/frames/images/display?chain=${params.chain}&tokenAddress=${params.tokenAddress}`,
+                `${process.env.NEXT_PUBLIC_SITE_URL}/frames/images/display?id=${params.id}`,
             ],
         },
         other: {
-            ...generateFrameMetadata(params.chain, params.tokenAddress),
+            ...generateFrameMetadata(
+                params.chain,
+                params.tokenAddress,
+                params.id
+            ),
         },
     };
 };

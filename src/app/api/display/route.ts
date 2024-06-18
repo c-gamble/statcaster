@@ -8,12 +8,15 @@ export const dynamic = 'force-dynamic';
 export async function GET(req: NextRequest): Promise<Response> {
     const chain = req.nextUrl.searchParams.get('chain') || '';
     const tokenAddress = req.nextUrl.searchParams.get('tokenAddress') || '';
+    const id = req.nextUrl.searchParams.get('id') || '';
 
     if (
         !chain ||
         !tokenAddress ||
+        !id ||
         chain.length === 0 ||
         tokenAddress.length === 0 ||
+        id.length === 0 ||
         !Object.keys(CHAINS).includes(chain)
     ) {
         return new Response(
@@ -30,7 +33,7 @@ export async function GET(req: NextRequest): Promise<Response> {
     const { data, error } = await supabaseClient
         .from('displays')
         .select('*')
-        .eq('tokenAddress', tokenAddress);
+        .eq('id', id);
     if (error || !data || data.length === 0) {
         return new Response(
             JSON.stringify({

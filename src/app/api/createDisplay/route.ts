@@ -4,7 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 
 export const dynamic = 'force-dynamic';
 
-function successResponse(state: any) {
+function successResponse(state: any, id: string) {
     return new NextResponse(
         getFrameHtmlResponse({
             buttons: [
@@ -16,7 +16,7 @@ function successResponse(state: any) {
                 {
                     label: 'Get Link',
                     action: 'link',
-                    target: `${process.env.NEXT_PUBLIC_SITE_URL}/claim/${state.chain}/${state.tokenAddress}`,
+                    target: `${process.env.NEXT_PUBLIC_SITE_URL}/claim/${state.chain}/${state.tokenAddress}/${id}`,
                 },
             ],
             image: {
@@ -75,7 +75,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         if (error || !data || data.length === 0) {
             return errorResponse();
         }
-        return successResponse(state);
+        return successResponse(state, data[0].id);
     } catch (e: any) {
         return errorResponse();
     }

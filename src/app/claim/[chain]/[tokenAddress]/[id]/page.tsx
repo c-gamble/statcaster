@@ -7,12 +7,13 @@ import { CHAINS } from '@/constants/chains';
 import { getTextColor } from '@/utils/textColor';
 
 type Props = {
-    params: { chain: string; tokenAddress: string };
+    params: { chain: string; tokenAddress: string; id: string };
 };
 
 export default function Page({ params }: Props) {
     const chain = params.chain;
     const tokenAddress = params.tokenAddress;
+    const id = params.id;
 
     const [loading, setLoading] = useState(true);
     const [token, setToken]: any = useState(null);
@@ -29,7 +30,7 @@ export default function Page({ params }: Props) {
         const fetchToken = async () => {
             try {
                 const response = await axios.get(
-                    `/api/display?chain=${chain}&tokenAddress=${tokenAddress}`
+                    `/api/display?chain=${chain}&tokenAddress=${tokenAddress}&id=${id}`
                 );
                 setLoading(false);
                 setToken(response.data);
@@ -50,7 +51,7 @@ export default function Page({ params }: Props) {
 
     const handleCopy = async () => {
         await navigator.clipboard.writeText(
-            `${process.env.NEXT_PUBLIC_SITE_URL}/frames/display/${chain}/${tokenAddress}`
+            `${process.env.NEXT_PUBLIC_SITE_URL}/frames/display/${chain}/${tokenAddress}/${id}`
         );
         alert('copied to clipboard!');
     };

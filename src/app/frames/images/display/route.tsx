@@ -34,14 +34,15 @@ export async function GET(request: Request) {
         ];
 
         const url = new URL(request.url);
-        const chain = url.searchParams.get('chain') || '';
-        const tokenAddress = url.searchParams.get('tokenAddress') || '';
+        const chain = url.searchParams.get('chain');
+        const tokenAddress = url.searchParams.get('tokenAddress');
+        const id = url.searchParams.get('id');
 
         let token;
         let error;
         try {
             const tokenInfoResponse = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/api/display?chain=${chain}&tokenAddress=${tokenAddress}`,
+                `${process.env.NEXT_PUBLIC_API_URL}/api/display?chain=${chain}&tokenAddress=${tokenAddress}&id=${id}`,
                 { cache: 'no-store' }
             );
             token = await tokenInfoResponse.json();
