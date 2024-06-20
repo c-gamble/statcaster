@@ -19,7 +19,7 @@ const generateFrameMetadata = (
             {
                 label: 'Cast Your Stats',
                 action: 'link',
-                target: 'https://warpcast.com/thesoftdao/',
+                target: 'https://warpcast.com/thesoftdao/0xebd341f2',
             },
         ],
         image: {
